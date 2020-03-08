@@ -1,0 +1,33 @@
+<div id="contact" class="section db">
+        <div class="container">
+            <div class="section-title text-left">
+                <h3>Welcome to the Cooper Hewitt Collection Searcher!</h3>
+                <p>Please provide a Product Id or empty for a List of Products.</p>
+            </div><!-- end title -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="contact_form">
+                        <div id="message"></div>
+                       	<%= form_tag("/search", method: "post") do %>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input class="form-control" id="q" name="q" type="text" placeholder="Product Id" >
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                               
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12 text-center">
+                                    <div id="success"></div>
+                                    <button id="sendMessageButton" class="sim-btn btn-hover-new" data-text="Send Message" type="submit">Get Product(s)</button>
+                                </div>
+                            </div>
+                       <% end %>
+                    </div>
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+

@@ -1,0 +1,63 @@
+<br></br>
+<br></br>
+<%#Search for ID <%= search_field(:user, :name) %>
+<%=text_field_tag :user_name, value = nil, options = {id:"user_name",filterForColumn:"1", placeholder:"search"}%>
+<br></br>
+<p><%=@jsonString.html_safe%></p>
+
+<script>
+  window.onload = function () {
+			//Se le da el attributo hiddenbyfilter a todas las filas de la tabla
+
+			let rows = document.querySelectorAll("#table tr");
+			for (let i=0; i < rows.length; i++) rows[i].setAttribute("hiddenByFilter", 0);
+			
+			//Se asigna la funcion de filtrado al evento keyup 
+			let input_1 = document.querySelector("#user_name");
+			input_1.addEventListener("keyup", filter);
+
+			
+			
+	
+		}
+	
+		function filter () {
+			//this -> corresponde al input en el cual se da el evento keyup
+			//Valor del input
+			let searchValue = this.value;
+			var searchLenght = searchValue.length;
+		
+			//Listado de las filas de la tabla (tr)
+			let rows = document.querySelectorAll("#table tr");
+			//Indicador de que columna debe filtrar el input
+			let filterForColumn = this.getAttribute("filterForColumn");
+		   
+
+			for (let i=1; i < rows.length; i++){
+				//Si la fila no tiene filtro o si el nuevo filtro tiene precedencia
+				if (rows[i].getAttribute("hiddenByFilter") == 0 ||filterForColumn <= rows[i].getAttribute("hiddenByFilter")){
+					//Se aplica filtro a la fila
+					rows[i].setAttribute("hiddenByFilter", filterForColumn);
+					//Se obtiene la celda (td)
+					let cell = rows[i].querySelector("td:nth-child("+filterForColumn+")");
+					//Si el texto de la celda es igual al buscado o si el valor buscado es vacio
+					if (cell.innerText.substring(0, searchLenght) == searchValue || searchValue === "") {
+						//Se quita el filtro de la fila
+						rows[i].setAttribute("hiddenByFilter", 0);
+					}
+				}
+			}		
+		}
+</script>
+
+<style type="text/css">
+ 	 
+	   /*Muestra solo los que tengan el atributo hiddenbyfilter en 0*/
+	   /*Lo puse aqui para mostrar exactamente el core de este approach*/
+	    tr:not([hiddenByFilter="0"]) {
+	    	display:none;
+	    }
+</style>
+
+
+
